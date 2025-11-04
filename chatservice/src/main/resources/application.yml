@@ -1,0 +1,35 @@
+server:
+  port: 8087 # Port for the ChatService
+
+spring:
+  application:
+    name: chat-service
+
+  # --- JPA & PostgreSQL Configuration ---
+  datasource:
+    url: jdbc:postgresql://localhost:5432/skillswap_chatdb
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # --- Security Configuration ---
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # This URI must point to your AuthService's JWK Set endpoint
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
+
+# --- External Service Configuration ---
+services:
+  exchange-service:
+    # Base URL for the Exchange Service
+    base-url: "http://localhost:8084" # (Assuming ExchangeService runs on 8084)

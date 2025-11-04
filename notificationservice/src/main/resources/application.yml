@@ -1,0 +1,27 @@
+server:
+  port: 8085 # Port for the NotificationService
+
+spring:
+  application:
+    name: notification-service
+
+  # --- Security Configuration (copied from user-service) ---
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # This URI must point to your AuthService's JWK Set endpoint
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
+
+  # --- Email SMTP Configuration (from architecture doc) ---
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your-email@gmail.com # <-- REPLACE THIS
+    password: your-app-password     # <-- REPLACE THIS
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

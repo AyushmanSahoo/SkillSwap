@@ -1,0 +1,36 @@
+server:
+  port: 8081 # Port for the AuthService
+
+spring:
+  application:
+    name: auth-service
+
+  # --- JPA & PostgreSQL Configuration ---
+  datasource:
+    url: jdbc:postgresql://localhost:5432/skillswap_authdb
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# --- External Service Configuration ---
+services:
+  user-service:
+    base-url: "http://localhost:8082"
+
+# --- Custom JWT Configuration ---
+# This is where you configure your token
+jwt:
+  # This is your secret key.
+  # DO NOT use a weak key in production. Generate a strong, long, random string.
+  # You can generate one here: https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx
+  secret-key: "CHANGE_THIS_TO_A_VERY_STRONG_AND_SECRET_KEY_LATER_a8d9a8s9d8as9d8a"
+  expiration-ms: 3600000 # 1 hour
+  refresh-expiration-ms: 86400000 # 24 hours (for refresh token)

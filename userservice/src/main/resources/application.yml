@@ -1,0 +1,37 @@
+server:
+  port: 8082 # Port for the UserService
+
+spring:
+  application:
+    name: user-service
+
+  # --- JPA & PostgreSQL Configuration  ---
+  datasource:
+    url: jdbc:postgresql://localhost:5432/skillswap_userdb
+    username: postgres # Change this
+    password: 1234 # Change this
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    # Use 'update' to auto-update schema. Use 'create' or 'create-drop' for fresh dev.
+    hibernate:
+      ddl-auto: update
+    show-sql: true # Show SQL queries in the log
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # --- Security Configuration [cite: 47] ---
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # This URI must point to your AuthService's JWK Set endpoint
+          # (assuming AuthService runs on port 8081)
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
+
+# --- External Service Configuration (No Spring Cloud [cite: 42]) ---
+services:
+  skill-service:
+    # Base URL for the Skill Service
+    base-url: "http://localhost:8083" # (Assuming SkillService runs on 8083)

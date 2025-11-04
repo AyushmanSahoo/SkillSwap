@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="skillservice" />
+        <module name="reputationservice" />
+        <module name="exchangeservice" />
+        <module name="authservice" />
+        <module name="userservice" />
+        <module name="chatservice" />
+        <module name="notificationservice" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="eureka" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authservice" options="-parameters" />
+      <module name="chatservice" options="-parameters" />
+      <module name="eureka" options="-parameters" />
+      <module name="exchangeservice" options="-parameters" />
+      <module name="notificationservice" options="-parameters" />
+      <module name="reputationservice" options="-parameters" />
+      <module name="skillservice" options="-parameters" />
+      <module name="userservice" options="-parameters" />
+    </option>
+  </component>
+</project>
