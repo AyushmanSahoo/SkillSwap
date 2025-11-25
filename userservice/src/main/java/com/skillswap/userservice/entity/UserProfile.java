@@ -1,8 +1,12 @@
 package com.skillswap.userservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,11 +15,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserProfile {
+public class    UserProfile {
 
-    /**
-     * @Id: Marks this field as the Primary Key for the table.
-     */
+
     @Id
     private Long userId; // This ID comes from the AuthService
 
@@ -56,6 +58,10 @@ public class UserProfile {
      * orphanRemoval = true: Easy cleanup. If you remove a UserSkill
      * from this Set, JPA will automatically delete it from the database.
      */
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference        // <--- 1. Breaks JSON recursion (Forward part)
+    @ToString.Exclude            // <--- 2. Prevents StackOverflow in logs
+    @EqualsAndHashCode.Exclude   // <--- 3. Prevents StackOverflow in collections
     private Set<UserSkill> skills = new HashSet<>();
 }

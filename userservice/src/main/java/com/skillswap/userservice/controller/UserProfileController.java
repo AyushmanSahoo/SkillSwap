@@ -42,7 +42,7 @@ public class UserProfileController {
             @PathVariable Long id,
             @RequestBody UserUpdateRequest req) {
         try {
-            // TODO: Add security check: ensure authenticated user ID == id
+
             UserProfile profile = userService.updateUserProfile(id, req);
             return ResponseEntity.ok(profile);
         } catch (EntityNotFoundException e) {

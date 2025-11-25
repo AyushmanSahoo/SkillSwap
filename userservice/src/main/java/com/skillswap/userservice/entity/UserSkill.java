@@ -1,8 +1,11 @@
 package com.skillswap.userservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
@@ -26,6 +29,9 @@ public class UserSkill {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference           // <--- 1. Breaks JSON recursion (Back part)
+    @ToString.Exclude            // <--- 2. Prevents StackOverflow in logs
+    @EqualsAndHashCode.Exclude   // <--- 3. Prevents StackOverflow in collections
     private UserProfile user;
 
     @Column(nullable = false)
