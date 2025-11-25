@@ -1,6 +1,7 @@
 package com.skillswap.exchangeservice.entity;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "exchanges") // As defined in the architecture 
+@Table(name = "exchanges") // As defined in the architecture
 public class Exchange {
 
     @Id

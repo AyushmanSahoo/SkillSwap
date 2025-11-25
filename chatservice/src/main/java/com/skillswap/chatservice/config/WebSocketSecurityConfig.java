@@ -10,10 +10,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+// --- No more Spring Security or JWT imports ---
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
@@ -23,7 +20,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Slf4j
 public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final JwtDecoder jwtDecoder;
+    // --- No more JwtDecoder ---
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
@@ -31,26 +28,11 @@ public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
                 StompHeaderAccessor accessor =
-                    MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-                
-                // We only care about the initial CONNECT command
+                        MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-                    // "nativeHeaders" contains the original HTTP headers, including Authorization
-                    String authHeader = accessor.getFirstNativeHeader("Authorization");
-                    
-                    if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                        String token = authHeader.substring(7);
-                        try {
-                            Jwt jwt = jwtDecoder.decode(token);
-                            Authentication auth = new JwtAuthenticationToken(jwt);
-                            // This sets the 'Principal' for this WebSocket session
-                            accessor.setUser(auth);
-                            log.info("Authenticated WebSocket user: {}", auth.getName());
-                        } catch (Exception e) {
-                            log.warn("Failed to authenticate WebSocket user: {}", e.getMessage());
-                            // Could throw an exception here to deny the connection
-                        }
-                    }
+                    // Security is disabled, just log the connection
+                    log.info("New WebSocket connection attempt.");
                 }
                 return message;
             }

@@ -31,6 +31,6 @@ jwt:
   # This is your secret key.
   # DO NOT use a weak key in production. Generate a strong, long, random string.
   # You can generate one here: https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx
-  secret-key: "CHANGE_THIS_TO_A_VERY_STRONG_AND_SECRET_KEY_LATER_a8d9a8s9d8as9d8a"
+  secret-key: "PzBv3n+G4x/f3n6T8aO9n/sC5m6y/S5v7U/f9V/tC4w="
   expiration-ms: 3600000 # 1 hour
   refresh-expiration-ms: 86400000 # 24 hours (for refresh token)

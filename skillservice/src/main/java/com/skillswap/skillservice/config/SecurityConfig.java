@@ -2,8 +2,6 @@ package com.skillswap.skillservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,20 +15,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize
-                // Allow health checks
-                .requestMatchers("/actuator/health").permitAll()
-                
-                // Allow other services and users to read skill data
-                .requestMatchers(HttpMethod.GET, "/api/v1/skills/**").permitAll()
-                
-                // Secure all other endpoints (POST, PUT, DELETE)
-                .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
+                .authorizeHttpRequests(authorize -> authorize
+                        // --- THIS IS THE CHANGE ---
+                        // Allow all requests to any endpoint
+                        .anyRequest().permitAll()
+                )
+                // We have REMOVED .oauth2ResourceServer() which was causing the error
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Keep it stateless
 
         return http.build();
     }

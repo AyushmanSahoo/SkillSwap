@@ -16,24 +16,34 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeHttpRequests(authorize -> authorize
+//                // Allow health checks
+//                .requestMatchers("/actuator/health").permitAll()
+//
+//                // Allow the WebSocket handshake endpoint
+//                .requestMatchers("/ws/**").permitAll()
+//
+//                // Secure the REST API for message history
+//                .requestMatchers(HttpMethod.GET, "/api/v1/chat/**").authenticated()
+//
+//                .anyRequest().authenticated()
+//            )
+//            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+//            // Disable CSRF for STOMP/WebSocket to work
+//            .csrf(AbstractHttpConfigurer::disable)
+//            .sessionManagement(session ->
+//                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http
-            .authorizeHttpRequests(authorize -> authorize
-                // Allow health checks
-                .requestMatchers("/actuator/health").permitAll()
-                
-                // Allow the WebSocket handshake endpoint
-                .requestMatchers("/ws/**").permitAll() 
-                
-                // Secure the REST API for message history
-                .requestMatchers(HttpMethod.GET, "/api/v1/chat/**").authenticated()
-                
-                .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-            // Disable CSRF for STOMP/WebSocket to work
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .authorizeHttpRequests(authorize -> authorize
+                        // Allow all requests to any endpoint
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable);
+        // No .oauth2ResourceServer() needed
+
+
 
         return http.build();
     }

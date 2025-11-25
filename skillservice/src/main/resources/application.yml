@@ -1,13 +1,13 @@
 server:
-  port: 8086 # Port for the ReputationService
+  port: 8083 # Port for the SkillService
 
 spring:
   application:
-    name: reputation-service
+    name: skill-service
 
   # --- JPA & PostgreSQL Configuration ---
   datasource:
-    url: jdbc:postgresql://localhost:5432/skillswap_repudb
+    url: jdbc:postgresql://localhost:5432/skillswap_skilldb
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver

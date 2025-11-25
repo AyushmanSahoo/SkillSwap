@@ -20,13 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  # --- Security Configuration ---
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          # This URI must point to your AuthService's JWK Set endpoint
-          jwk-set-uri: http://localhost:8081/oauth2/jwks
+
 
 # --- External Service Configuration ---
 services:
