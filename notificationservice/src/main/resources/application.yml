@@ -1,5 +1,5 @@
 server:
-  port: 8085 # Port for the NotificationService
+  port: 8085
 
 spring:
   application:
@@ -7,15 +7,19 @@ spring:
 
 
 
-  # --- Email SMTP Configuration (from architecture doc) ---
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: youremail # <-- REPLACE THIS
-    password: your email password     # <-- REPLACE THIS
-    properties:
-      mail:
-        smtp:
+   host: smtp.gmail.com
+   port: 465          # Change 587 to 465
+   username: your email
+   password: App password
+   properties:
+     mail:
+       debug: true    # Keep debug on to see logs
+       smtp:
           auth: true
-          starttls:
-            enable: true
+          ssl:
+           enable: true        # Use SSL instead of STARTTLS
+           trust: "*"          # Trust the server certificate
+           # Remove or set starttls.enable to false
+       starttls:
+           enable: false
